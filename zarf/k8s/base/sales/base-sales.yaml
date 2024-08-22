@@ -40,3 +40,8 @@ spec:
       containers:
       - image: sales-image
         name: sales
+        env:
+        - name: GOMAXPROCS
+          valueFrom:
+            resourceFieldRef:
+              resource: limits.cpu
