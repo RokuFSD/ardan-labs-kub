@@ -29,6 +29,9 @@ AUTH_IMAGE      := $(BASE_IMAGE_NAME)/$(AUTH_APP):$(VERSION)
 run: 
 	go run app/services/sales-api/main.go | go run app/tooling/logfmt/main.go
 
+run-help:
+	go run app/services/sales-api/main.go --help | go run app/tooling/logfmt/main.go
+
 dev-up:
 	kind create cluster \
 		--image $(KIND) \
@@ -82,3 +85,14 @@ sales:
 		--build-arg BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ") \
 		.
 
+# ===========================
+# Modules support
+
+deps-reset:
+	git checkout -- go.mod
+	go mod tidy
+	go mod vendor
+
+tidy:
+	go mod tidy
+	go mod vendor
